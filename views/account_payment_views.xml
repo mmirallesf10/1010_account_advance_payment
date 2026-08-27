@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="account.action_account_payments" model="ir.actions.act_window">
+            <field name="context">{
+                'default_payment_type': 'inbound',
+                'default_partner_type': 'customer',
+                'search_default_inbound_filter': 1,
+                'default_move_journal_types': ('bank', 'cash'),
+                'display_account_trust': True,
+                'set_is_advance_payments': True,
+            }</field>
+        </record>
+
+        <record id="account.action_account_payments_payable" model="ir.actions.act_window">
+            <field name="context">{
+                'default_payment_type': 'outbound',
+                'default_partner_type': 'supplier',
+                'search_default_outbound_filter': 1,
+                'default_move_journal_types': ('bank', 'cash'),
+                'display_account_trust': True,
+                'set_is_advance_payments': True,
+            }</field>
+        </record>
+
+        <record id="1010_account_payment_form_advance_payments" model="ir.ui.view">
+            <field name="name">1010.account.payment.form.advance.payments</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account.view_account_payment_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='group2']" position="inside">
+                    <field name="is_advance_payments" readonly="1" force_create="1"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
