@@ -28,8 +28,9 @@
             <field name="model">account.payment</field>
             <field name="inherit_id" ref="account.view_account_payment_form"/>
             <field name="arch" type="xml">
-                <xpath expr="//group[@name='group2']" position="inside">
-                    <field name="is_advance_payments" readonly="1" force_create="1"/>
+                <xpath expr="//field[@name='payment_type']" position="after">
+                    <field name="change_nature_payment" invisible="1"/>
+                    <field name="is_advance_payments" readonly="change_nature_payment" force_create="1" groups="1010_account_advance_payment.group_account_advance_payment_user"/>
                 </xpath>
             </field>
         </record>
