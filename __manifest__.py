@@ -11,6 +11,7 @@
     'data': [
         'views/res_config_settings_views.xml',
         'views/account_payment_views.xml',
+        'security/account_advance_payment_security.xml'
     ],
     'installable': True,
     'application': False,
