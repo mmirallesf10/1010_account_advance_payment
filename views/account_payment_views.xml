@@ -30,6 +30,7 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='payment_type']" position="after">
                     <field name="change_nature_payment" invisible="1"/>
+                    <field name="destination_account_advance_id" invisible="1"/>
                     <field name="is_advance_payments" readonly="change_nature_payment" force_create="1" groups="1010_account_advance_payment.group_account_advance_payment_user"/>
                 </xpath>
             </field>

@@ -7,14 +7,10 @@ class ResPartner(models.Model):
 
     account_receivable_advance_id = fields.Many2one('account.account', company_dependent=True,
                                                     string="Cuenta por cobrar anticipo",
-                                                    related="company_id.account_receivable_advance_id",
-                                                    domain="[('account_type', '=', 'asset_receivable')]",
-                                                    readonly=False)
+                                                    domain="[('account_type', '=', 'asset_receivable')]")
 
     account_payable_advance_id = fields.Many2one('account.account', company_dependent=True,
                                                  string="Cuenta por pagar anticipo",
-                                                 related="company_id.account_payable_advance_id",
-                                                 domain="[('account_type', '=', 'liability_payable')]",
-                                                 readonly=False)
+                                                 domain="[('account_type', '=', 'liability_payable')]")
 
     is_accounts_locked = fields.Boolean('Cuentas bloqueadas', copy=False, default=False)
