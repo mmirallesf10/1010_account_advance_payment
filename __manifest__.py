@@ -9,9 +9,10 @@
     'license': 'LGPL-3',
     'depends': ['base', 'account','save_base'],
     'data': [
+        'security/account_advance_payment_security.xml',
         'views/res_config_settings_views.xml',
         'views/account_payment_views.xml',
-        'security/account_advance_payment_security.xml'
+        'views/res_partner_view.xml',
     ],
     'installable': True,
     'application': False,
