@@ -51,9 +51,12 @@ class AccountPaymentInnerit(models.Model):
         for pay in self:
             if pay.partner_type == 'customer':
                 # Receive money from invoice or send money to refund it.
-                if pay.partner_id:
+                if pay.partner_id and pay.partner_id.with_company(
+                        pay.company_id).account_receivable_advance_id:
                     pay.destination_account_advance_id = pay.partner_id.with_company(
                         pay.company_id).account_receivable_advance_id
+                elif self.env.company.account_receivable_advance_id:
+                    pay.destination_account_advance_id = self.env.company.account_receivable_advance_id
                 else:
                     pay.destination_account_advance_id = self.env['account.account'].with_company(pay.company_id).search([
                         *self.env['account.account']._check_company_domain(pay.company_id),
@@ -62,8 +65,10 @@ class AccountPaymentInnerit(models.Model):
                     ], limit=1)
             elif pay.partner_type == 'supplier':
                 # Send money to pay a bill or receive money to refund it.
-                if pay.partner_id:
+                if pay.partner_id and pay.partner_id.with_company(pay.company_id).account_payable_advance_id:
                     pay.destination_account_advance_id = pay.partner_id.with_company(pay.company_id).account_payable_advance_id
+                elif self.env.company.account_payable_advance_id:
+                    pay.destination_account_advance_id = self.env.company.account_payable_advance_id
                 else:
                     pay.destination_account_advance_id = self.env['account.account'].with_company(pay.company_id).search([
                         *self.env['account.account']._check_company_domain(pay.company_id),
