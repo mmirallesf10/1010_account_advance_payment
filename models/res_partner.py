@@ -16,3 +16,5 @@ class ResPartner(models.Model):
                                                  related="company_id.account_payable_advance_id",
                                                  domain="[('account_type', '=', 'liability_payable')]",
                                                  readonly=False)
+
+    is_accounts_locked = fields.Boolean('Cuentas bloqueadas', copy=False, default=False)

@@ -8,9 +8,9 @@
             <field name="arch" type="xml">
                 <xpath expr="//block[@id='pay_invoice_online_setting_container']" position="inside">
                     <setting>
-                        <field name="has_accounting_advance_payments"/>
+                        <field name="has_account_advance_payments"/>
                     </setting>
-                    <setting id="account_advance_payments" string="Cuentas de anticipos:" invisible="not has_accounting_advance_payments">
+                    <setting id="account_advance_payments" string="Cuentas de anticipos:" invisible="not has_account_advance_payments">
                         <div class="content-group">
                             <div class="row mt8">
                                 <label for="account_receivable_advance_id" class="col-lg-5 o_light_label"/>
