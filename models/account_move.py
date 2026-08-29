@@ -23,3 +23,15 @@ class AccountMove(models.Model):
             res_domain = new_filter
         return res_domain
 
+    def js_assign_outstanding_line(self, line_id):
+        super().js_assign_outstanding_line(line_id)
+        lines = self.env['account.move.line'].browse(line_id)
+        payment_id = lines.payment_id
+        if payment_id and payment_id.is_advance_payments:
+            if self.move_type in ('out_invoice', 'out_refund'):
+                lines += self.line_ids.filtered(lambda line: line.account_id.account_type == 'asset_receivable' and not line.reconciled)
+            elif self.move_type in ('in_invoice', 'in_refund'):
+                lines += self.line_ids.filtered(
+                    lambda line: line.account_id.account_type == 'liability_payable' and not line.reconciled)
+            return lines.action_account_advance_payment_reconcile()
+
