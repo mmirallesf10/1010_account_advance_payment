@@ -43,5 +43,9 @@ class AccountMove(models.Model):
         res = super().js_remove_outstanding_partial(partial_id)
         if reclassification_move:
             reclassification_move.move_id.button_draft()
+            reclassification_move.move_id.line_ids.mapped('analytic_line_ids').unlink()
+            reclassification_move.with_context(skip_account_move_synchronization=True, force_delete=True,
+                                 check_move_validity=False,skip_readonly_check=True).unlink()
+
         return res
 
