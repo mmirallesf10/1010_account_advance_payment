@@ -35,3 +35,13 @@ class AccountMove(models.Model):
                     lambda line: line.account_id.account_type == 'liability_payable' and not line.reconciled)
             return lines.action_account_advance_payment_reconcile()
 
+    def js_remove_outstanding_partial(self, partial_id):
+        obj_partial_id = self.env['account.partial.reconcile'].browse(partial_id)
+        reclassification_move = (obj_partial_id.debit_move_id + obj_partial_id.credit_move_id).filtered(lambda
+                                                                                                            line: line.move_id.move_type == 'entry' and len(
+            line.move_id.reconciled_payment_ids) == 1 and line.move_id.reconciled_payment_ids[0].is_advance_payments)
+        res = super().js_remove_outstanding_partial(partial_id)
+        if reclassification_move:
+            reclassification_move.move_id.button_draft()
+        return res
+
