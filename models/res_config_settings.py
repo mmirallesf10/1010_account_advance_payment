@@ -24,7 +24,4 @@ class ResConfigSettings(models.TransientModel):
     @api.onchange('has_account_advance_payments')
     def _onchange_has_account_advance_payments(self):
         if self.has_account_advance_payments:
-            self.env['res.partner'].search(
-                [('is_accounts_locked', '=', True)]).is_accounts_locked = False
-            self.env['res.partner'].search(
-                [('is_accounts_locked', '=', False)]).is_accounts_locked = True
+            self.env['res.partner'].search([]).is_accounts_locked = not self.has_account_advance_payments
