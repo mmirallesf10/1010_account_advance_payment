@@ -49,3 +49,7 @@ class AccountMove(models.Model):
 
         return res
 
+    def _get_account_account_new_line(self, payment):
+        super()._get_account_account_new_line(payment)
+        return payment.destination_account_advance_id
+
