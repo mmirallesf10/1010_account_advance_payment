@@ -8,8 +8,8 @@ class ResCompany(models.Model):
 
     account_receivable_advance_id = fields.Many2one('account.account', company_dependent=True,
                                                      string="Cuenta por cobrar anticipo",
-                                                     domain="[('account_type', '=', 'asset_receivable')]")
+                                                     domain="[('account_type', '=', 'liability_payable')]")
 
     account_payable_advance_id = fields.Many2one('account.account', company_dependent=True,
                                                   string="Cuenta por pagar anticipo",
-                                                  domain="[('account_type', '=', 'liability_payable')]")
+                                                  domain="[('account_type', '=', 'asset_receivable')]")
