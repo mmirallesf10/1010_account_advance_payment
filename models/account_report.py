@@ -9,7 +9,16 @@ class AccountReport(models.Model):
     @api.model
     def _get_options_account_type_domain(self, options):
         domain = super()._get_options_account_type_domain(options)
-        if options.get('advance_payment',False) and domain:
+        # For aged partner balance reports, the advance payment logic is now handled in the SQL query
+        # So we skip this domain modification for those reports
+        if options.get('advance_payment', False) and domain:
+            # Check if this is an aged partner balance report
+            report_name = self.browse(options.get('report_id')).name if options.get('report_id') else ''
+            if 'aged' in report_name.lower():
+                # Return the standard domain, filtering is done in the SQL query
+                return domain
+
+            # For other reports, keep the original logic
             advance_payment = []
             all_domains = []
             selected_domains = []
